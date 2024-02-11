@@ -18,16 +18,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(security: "is_granted('ROLE_USER')"),
-//         new Delete(security: "is_granted('ROLE_USER')"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_USER')"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(security: "is_granted('ROLE_USER')"),
+        new Delete(security: "is_granted('ROLE_USER')"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_USER')"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class Tag
 {
     use HasIdTrait;
@@ -35,19 +35,19 @@ class Tag
     use HasDescriptionTrait;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $menu = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?self $parent = null;
 
     /**
      * @var Collection<int, Tag>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private Collection $children;
 
     /**

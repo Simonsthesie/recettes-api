@@ -19,16 +19,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(security: "is_granted('ROLE_USER')"),
-//         new Delete(security: "is_granted('ROLE_USER')"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_USER')"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(security: "is_granted('ROLE_USER')"),
+        new Delete(security: "is_granted('ROLE_USER')"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_USER')"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class Source
 {
     use HasIdTrait;
@@ -37,13 +37,13 @@ class Source
     use HasTimestampTrait;
 
     #[ORM\Column(length: 255, nullable: true)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?string $url = null;
 
     /**
      * @var Collection<int, RecipeHasSource>
      */
-     #[ORM\OneToMany(mappedBy: 'source',targetEntity: RecipeHasSource::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'source', targetEntity: RecipeHasSource::class, orphanRemoval: true)]
     private Collection $recipeHasSources;
 
     public function __construct()

@@ -16,32 +16,32 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 // /recipe/1/sources/4
 #[ORM\Entity(repositoryClass: RecipeHasSourceRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//         new Delete(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+        new Delete(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class RecipeHasSource
 {
     use HasIdTrait;
 
     #[ORM\Column(type: Types::TEXT)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?string $url = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasSources')]
     #[ORM\JoinColumn(nullable: false)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?Recipe $recipe = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasSources')]
     #[ORM\JoinColumn(nullable: false)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?Source $source = null;
 
     public function getUrl(): ?string

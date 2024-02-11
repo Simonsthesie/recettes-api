@@ -20,16 +20,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Delete(security: "is_granted('ROLE_ADMIN') or object.isUserAllowedToEdit(user)"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_ADMIN') or object.isUserAllowedToEdit(user)"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
-// #[Vich\Uploadable]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Delete(security: "is_granted('ROLE_ADMIN') or object.isUserAllowedToEdit(user)"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_ADMIN') or object.isUserAllowedToEdit(user)"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
+#[Vich\Uploadable]
 class Image
 {
     use HasIdTrait;
@@ -38,11 +38,11 @@ class Image
     use HasTimestampTrait;
 
     #[ORM\Column(length: 255)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?string $path = null;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?int $size = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
@@ -51,9 +51,9 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Step $step = null;
 
-    // attention ici NOTE: This is not a mapped field of entity metadata, just a simple property.
-    // #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
-    // private ?File $file = null;
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
+    private ?File $file = null;
 
     public function getPath(): ?string
     {
@@ -103,10 +103,10 @@ class Image
         return $this;
     }
 
-    // public function getFile(): ?File
-    // {
-    //     return $this->file;
-    // }
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
 
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -115,27 +115,27 @@ class Image
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      */
-    // public function setFile(File|UploadedFile|null $file): Image
-    // {
-    //     $this->file = $file;
+    public function setFile(File|UploadedFile|null $file): Image
+    {
+        $this->file = $file;
 
-    //     if (null !== $file) {
-    //         $this->setUpdatedAt(new DateTime());
-    //     }
+        if (null !== $file) {
+            $this->setUpdatedAt(new DateTime());
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function isUserAllowedToEdit(User $user): bool
-    // {
-    //     if ($this->getRecipe()) {
-    //         return $this->getRecipe()->getUser()->getId() === $user->getId();
-    //     }
-    //     if ($this->getStep()) {
-    //         return $this->getStep()->getRecipe()->getUser()->getId() === $user->getId();
-    //     }
-    //     return false;
-    // }
+    public function isUserAllowedToEdit(User $user): bool
+    {
+        if ($this->getRecipe()) {
+            return $this->getRecipe()->getUser()->getId() === $user->getId();
+        }
+        if ($this->getStep()) {
+            return $this->getStep()->getRecipe()->getUser()->getId() === $user->getId();
+        }
+        return false;
+    }
 
     public function __toString(): string
     {

@@ -19,17 +19,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(),
-//         new Delete(),
-//         new GetCollection(),
-//         new Post(),
-//     ],
-//     normalizationContext: ['groups' => ['get']],
-//     security: "is_granted('ROLE_USER')"
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(),
+        new Delete(),
+        new GetCollection(),
+        new Post(),
+    ],
+    normalizationContext: ['groups' => ['get']],
+    security: "is_granted('ROLE_USER')"
+)]
 class Ingredient
 {
     use HasIdTrait;
@@ -38,19 +38,19 @@ class Ingredient
     use HasTimestampTrait;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $vegan = false;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $vegetarian = true;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $dairyFree = false;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $glutenFree = false;
 
     /**

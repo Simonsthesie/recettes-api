@@ -14,26 +14,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecipeHasIngredientRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//         new Delete(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+        new Delete(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_ADMIN') or object.getRecipe().getUser() == user"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class RecipeHasIngredient
 {
     use HasIdTrait;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?float $quantity = null;
 
     #[ORM\Column]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?bool $optional = false;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
@@ -42,16 +42,16 @@ class RecipeHasIngredient
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
     #[ORM\JoinColumn(nullable: false)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?Ingredient $ingredient = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?IngredientGroup $ingredientGroup = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?Unit $unit = null;
 
     public function getQuantity(): ?float

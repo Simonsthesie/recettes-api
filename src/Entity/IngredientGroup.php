@@ -17,16 +17,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IngredientGroupRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(),
-//         new Delete(),
-//         new GetCollection(),
-//         new Post(),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(),
+        new Delete(),
+        new GetCollection(),
+        new Post(),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class IngredientGroup
 {
     use HasIdTrait;

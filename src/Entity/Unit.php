@@ -16,26 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UnitRepository::class)]
-// #[ApiResource(
-//     operations: [
-//         new Get(),
-//         new Patch(security: "is_granted('ROLE_USER')"),
-//         new Delete(security: "is_granted('ROLE_USER')"),
-//         new GetCollection(),
-//         new Post(security: "is_granted('ROLE_USER')"),
-//     ],
-//     normalizationContext: ['groups' => ['get']]
-// )]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new Patch(security: "is_granted('ROLE_USER')"),
+        new Delete(security: "is_granted('ROLE_USER')"),
+        new GetCollection(),
+        new Post(security: "is_granted('ROLE_USER')"),
+    ],
+    normalizationContext: ['groups' => ['get']]
+)]
 class Unit
 {
     use HasIdTrait;
 
     #[ORM\Column(length: 64)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?string $singular = null;
 
     #[ORM\Column(length: 64)]
-    // #[Groups(['get'])]
+    #[Groups(['get'])]
     private ?string $plural = null;
 
     /**
